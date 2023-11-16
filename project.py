@@ -16,9 +16,7 @@ from IPython import display
 
     
 def read_dataset():
-    '''for dirname, _, filenames in os.walk('/usr/PP'):
-        for filename in filenames:
-            print(os.path.join(dirname, filename))'''
+    
     df = pd.read_csv("jobs.csv", encoding="utf-16").drop(['ID'], axis=1).drop_duplicates() 
     #Reading the csv file and dropping the duplicates while reading itself for further processing and cleaning!
     print("The dimensions of the imported dataset::",df.shape)
@@ -77,9 +75,9 @@ def visualize_skills_required(l2):
     plt.figure(figsize=(27,6))
     ms_skills = sns.barplot(x=words,y=np.log2(counts), palette=color_blind_palette)
 
-    plt.rcParams['font.size'] = '9'
+    plt.rcParams['font.size'] = '8'
     width = 0.7
-    plt.tick_params(axis="x", rotation=90)
+    plt.tick_params(axis="x", rotation=45)
     plt.xlabel('Words',fontsize=0.02)
     plt.ylabel('Occurrences in log2 scale',fontsize=10)
     plt.title('Word Occurrences in the List of Skills')
@@ -389,8 +387,6 @@ def linear_search_and_visualize_line_chart(df,company_name):
             ax.plot(name, ls[i], marker='o', linestyle='', color='blue')
             
         #this display.display gives the visual effect/animation to the plot
-        #display.display(fig)
-        #display.clear_output(wait=True)
         plt.show(block=False)
         plt.pause(0.01)
         #plt.savefig(f'frames/frame_{i:03d}.png')
@@ -407,7 +403,6 @@ def binary_search_and_visualize_line_chart(df,company_name):
     
     print("-------------------This Function is the centre of interest for the entire Analytics-----------------------")
     df = df.head(30)
-    
     lc = list(map(str, df['Company'])) 
     ls = list(df['High_Salary'])
 
@@ -415,7 +410,6 @@ def binary_search_and_visualize_line_chart(df,company_name):
     sorted_data = sorted(zip(lc, ls), key=lambda x: x[0])
     lc, ls = zip(*sorted_data)
     fig, ax = plt.subplots()
-
     ax.plot(lc, ls, marker='o', linestyle='-', color='tomato', label='All Companies')
     ax.set_xticks(lc)
     ax.set_xticklabels(lc, rotation=35, ha='right',fontsize=7)
@@ -424,14 +418,11 @@ def binary_search_and_visualize_line_chart(df,company_name):
     ax.grid(True)
 
     found = False
-
     # Perform binary search on the sorted data
     left, right = 0, len(lc) - 1
     sequence_number = 1  # Initialize sequence number
-
     while left <= right:
         mid = (left + right) // 2
-
         # Highlight the current dot
         ax.plot(lc[mid], ls[mid], marker='o', markersize=10, color='green', label='Current Search')
 
@@ -466,7 +457,7 @@ def binary_search_and_visualize_line_chart(df,company_name):
     plt.show()
 
 if __name__ == "__main__":
-    #import_lib()
+    
     df = read_dataset()
     df = cleanse_dataset(df)
     print("Welcome to the Data Science Job Market in US - Analysis")
@@ -474,9 +465,7 @@ if __name__ == "__main__":
     print("---------------------------------------------------------------------------------------------------------")
     print("Let's visualize and analyse the data!!!")
     print(df.head(10))
-    ans = input("Press one of the options' number code to get you visualize different analytical techniques of our dataset...\n1. What all skills are mostly required for a data professional? \n2. View the Top 20 Job_Positions, Locations and Companies \n3. Job Level Distribution analytics \n4. What job role will pay you what? \n5. Wanna view 3D - Plot?  \n6. Test whether our analysis is going correct \n7. Average Salaries by Location \n8. PIE Chart \n9. Applying DSA Concepts to our analysis and visualising realtime results \n10. Exit(by pressing -1)")    
-    #visualize_skills_required(l2)
-    print(ans)
+    ans = '0'
     
     while(ans!='-1'):
         ans = input("Press one of the options' number code to get you visualize different analytical techniques of our dataset...\n1. What all skills are mostly required for a data professional? \n2. View the Top 20 Job_Positions, Locations and Companies \n3. Job Level Distribution analytics \n4. What job role will pay you what? \n5. Wanna view 3D - Plot?  \n6. Test whether our analysis is going correct \n7. Average Salaries by Location \n8. PIE Chart \n9. Applying DSA Concepts(LINEAR SEARCH) to our analysis and visualising realtime results \n10. Applying DSA Concepts(BINARY SEARCH) to our analysis and visualising realtime results  \n11. Exit(by pressing -1)\n")    
